@@ -22,4 +22,18 @@ interface NewsApi {
         @Query("show-fields") fields: String = "all",
         @Query("format") format: String = "json",
     ): NewsDto
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @GET("/search")
+    suspend fun searchNews(
+        @Query("api-key") apiKey: String = "ca485296-56cf-461c-a792-816e10a5ccb0",
+        @Query("page-size") pageSize: String = "20",
+        @Query("from-date") fromDate: String? =  "2022-01-25",
+        @Query("to-date") toDate: String? = usersCurrentDate,
+        @Query("order-by") order: String = "newest",
+        @Query("show-tags") tags: String = "contributor",
+        @Query("show-fields") fields: String = "all",
+        @Query("format") format: String = "json",
+        @Query("q") query: String,
+    ): NewsDto
 }

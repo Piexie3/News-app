@@ -30,7 +30,7 @@ fun NavGraph(
            DetailScreen(navHostController,viewModel)
        }
        composable(Screens.SearchScreen.route){
-           SearchScreen(navHostController)
+           SearchScreen()
        }
        composable(Screens.TrendsScreen.route){
            TrendingScreen(navHostController)

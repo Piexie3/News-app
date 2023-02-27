@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Green80,
-    onPrimary = Green20,
+    primary = primary,
+    onPrimary = Green40,
     primaryContainer = Green30,
     onPrimaryContainer = Green90,
     inversePrimary = Green40,
@@ -34,7 +34,7 @@ private val DarkColorScheme = darkColorScheme(
     onError = Red20,
     errorContainer = Red30,
     onErrorContainer = Red90,
-    background = Grey10,
+    background = background,
     onBackground = Grey90,
     surface = GreenGrey30,
     onSurface = GreenGrey80,
@@ -63,15 +63,15 @@ private val LightColorScheme = lightColorScheme(
     onError = Color.White,
     errorContainer = Red90,
     onErrorContainer = Red10,
-    background = Grey99,
-    onBackground = Grey10,
+    background = lightbackground,
+    onBackground = Grey90,
     surface = GreenGrey90,
     onSurface = GreenGrey30,
     inverseSurface = Grey20,
-    inverseOnSurface = Grey95,
+    inverseOnSurface = Grey70,
     surfaceVariant = GreenGrey90,
     onSurfaceVariant = GreenGrey30,
-    outline = GreenGrey50
+    outline = GreenGrey50,
 )
 @Composable
 fun NewsTheme(
@@ -96,9 +96,5 @@ fun NewsTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+
 }

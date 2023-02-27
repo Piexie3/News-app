@@ -1,4 +1,4 @@
-package com.manubett.bettanews.data.repository
+package com.manubett.news.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -13,5 +13,10 @@ class NewsRepositoryImpl @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getNews(): NewsDto {
        return api.getAllNews()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun searchNews(query: String): NewsDto {
+        return api.searchNews(query= query)
     }
 }

@@ -64,6 +64,7 @@ fun HomeScreen(
                     }
                 },
                 backgroundColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                modifier = Modifier.wrapContentHeight().clip(CircleShape)
             )
         },
         bottomBar = {

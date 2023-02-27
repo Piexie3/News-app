@@ -2,7 +2,7 @@ package com.manubett.news.di
 
 import com.manubett.news.core.util.Constants.BASE_URL
 import com.manubett.bettanews.data.remote.NewsApi
-import com.manubett.bettanews.data.repository.NewsRepositoryImpl
+import com.manubett.news.data.repository.NewsRepositoryImpl
 import com.manubett.news.domain.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
