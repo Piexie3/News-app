@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 
 enum class BottomNavItem(val icon: ImageVector, val route: String){
     HOME(Icons.Outlined.Home, Screens.HomeScreen.route),
-    TREND(Icons.Outlined.BubbleChart, Screens.TrendsScreen.route),
+    TREND(Icons.Outlined.Whatshot, Screens.TrendsScreen.route),
     SEARCH(Icons.Outlined.Search, Screens.SearchScreen.route),
     BOOKMARK(Icons.Outlined.Bookmarks, Screens.BookMarkScreen.route),
     PROFILE(Icons.Outlined.AccountCircle, Screens.ProfileScreen.route),

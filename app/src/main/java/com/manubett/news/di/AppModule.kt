@@ -1,9 +1,10 @@
 package com.manubett.news.di
 
+import com.manubett.news.feature_posts.domain.use_cases.GetNewsUseCases
 import com.manubett.news.core.util.Constants.BASE_URL
-import com.manubett.bettanews.data.remote.NewsApi
-import com.manubett.news.data.repository.NewsRepositoryImpl
-import com.manubett.news.domain.repository.NewsRepository
+import com.manubett.news.feature_posts.data.remote.NewsApi
+import com.manubett.news.feature_posts.data.repository.NewsRepositoryImpl
+import com.manubett.news.feature_posts.domain.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +35,9 @@ object AppModule {
         return NewsRepositoryImpl(api)
     }
 
-
-
+    @Provides
+    @Singleton
+    fun providesGetNewsUseCase(repository: NewsRepository): GetNewsUseCases {
+        return GetNewsUseCases(repository)
+    }
 }

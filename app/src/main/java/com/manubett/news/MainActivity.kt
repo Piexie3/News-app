@@ -3,11 +3,10 @@ package com.manubett.news
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Surface
+import androidx.compose.ui.Modifier
 import com.manubett.news.navigation.NavGraph
-import com.manubett.news.presentation.home.DetailScreen
-import com.manubett.news.presentation.home.HomeViewModel
 import com.manubett.news.ui.theme.NewsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +16,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewsTheme {
-                NavGraph()
+                Surface(
+                    modifier = Modifier.fillMaxSize()
+                )
+                {
+                    NavGraph()
+                }
             }
         }
     }

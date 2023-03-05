@@ -43,6 +43,8 @@ val GreenGrey80 = Color(0xFFbadec8)
 val GreenGrey90 = Color(0xFFdcefe4)
 
 
+val lightBlue = Color(0xFF00A5FF)
+
 val background = Color(0xFF141414)
 val pinkSecodary = Color(0xFFFF004D)
 val primary = Color(0xFFAA95A9)

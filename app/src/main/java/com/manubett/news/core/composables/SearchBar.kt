@@ -2,14 +2,18 @@ package com.manubett.news.core.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,131 +23,106 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 
 @Composable
 fun SearchBar(
-    autoFocus: Boolean,
-//    viewModel: SearchViewModel = hiltViewModel(),
-    onSearch: () -> Unit
+    modifier: Modifier = Modifier
+        .clip(RoundedCornerShape(100))
+        // .fillMaxWidth()
+        .background(
+            if (isSystemInDarkTheme())
+                Color.White.copy(alpha = .24F) else
+                Color.Black.copy(alpha = .24F)
+        ),
+    hint: String = "Search",
+    onSearchParamChange: (String) -> Unit,
+    onSearchClick: (String) -> Unit
 ) {
+    Box(modifier = modifier.height(54.dp)) {
+        var searchParam: String by remember { mutableStateOf("") }
 
-   Box(
-        modifier = Modifier
-            .padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.onSecondary)
-            .fillMaxWidth()
-            .height(54.dp)
-    ) {
-        var searchInput: String by remember { mutableStateOf("") }
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
-       var text by remember {
-           mutableStateOf("")
-       }
-        LaunchedEffect(key1 = searchInput) {
-//            if (viewModel.searchParam.value.trim().isNotEmpty() &&
-//                viewModel.searchParam.value.trim().length != viewModel.previousSearch.value.length
-//            ) {
-//                delay(750)
-//                onSearch()
-//                viewModel.previousSearch.value = searchInput.trim()
-//            }
-        }
 
         TextField(
-//            value = searchInput,
-            value = text,
-            onValueChange = {
-//                    newValue ->
-//                searchInput = if (newValue.trim().isNotEmpty()) newValue else ""
-//                viewModel.searchParam.value = searchInput
-                text = text
+            value = searchParam,
+            onValueChange = { newValue ->
+                searchParam = if (newValue.trim().isNotEmpty()) newValue else ""
+                onSearchParamChange(newValue)
             },
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .focusRequester(focusRequester = focusRequester),
             singleLine = true,
             placeholder = {
                 Text(
-                    text = "Search...",
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8F)
+                    text = hint,
+                    color = if (isSystemInDarkTheme())
+                        Color.White else
+                        Color.Black,
                 )
             },
             colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.White.copy(alpha = 0.78F),
-                disabledTextColor = Color.LightGray,
+                containerColor = if (isSystemInDarkTheme())
+                    Color.Black.copy(alpha = .24F) else
+                    Color.White.copy(alpha = .24F),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-                ), keyboardOptions = KeyboardOptions(
+                textColor = if (isSystemInDarkTheme())
+                    Color.White else
+                    Color.Black
+            ), keyboardOptions = KeyboardOptions(
                 autoCorrect = true,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
             ),
             keyboardActions = KeyboardActions(
                 onSearch = {
-//                    if (viewModel.searchParam.value.trim().isNotEmpty()) {
-//                        focusManager.clearFocus()
-//                        viewModel.searchParam.value = searchInput
-//                        if (searchInput != viewModel.previousSearch.value) {
-//                            viewModel.previousSearch.value = searchInput
-//                            onSearch()
-//                        }
-//                    }
+                    onSearchClick(searchParam)
+                    focusManager.clearFocus()
                 }
             ),
             trailingIcon = {
-                LaunchedEffect(Unit) {
-                    if (autoFocus) {
-                        focusRequester.requestFocus()
-                    }
-                }
                 Row {
-                    AnimatedVisibility(visible = searchInput.trim().isNotEmpty()) {
-                        IconButton(onClick = {
-
-                            focusManager.clearFocus()
-                            searchInput = ""
-//                            viewModel.searchParam.value = ""
-                        }) {
+                    AnimatedVisibility(visible = searchParam.trim().isNotEmpty()) {
+                        IconButton(
+                            onClick = {
+                                focusManager.clearFocus()
+                                searchParam = ""
+                                onSearchParamChange(searchParam)
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(
+                                contentColor = if (isSystemInDarkTheme())
+                                    Color.White else
+                                    Color.Black
+                            )
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Clear,
-                                tint = MaterialTheme.colorScheme.primary,
                                 contentDescription = null
                             )
                         }
                     }
 
-                    IconButton(onClick = {
-//                        if (viewModel.searchParam.value.trim().isNotEmpty()) {
-//                            focusManager.clearFocus()
-//                            viewModel.searchParam.value = searchInput
-//                            if (searchInput != viewModel.previousSearch.value) {
-//                                viewModel.previousSearch.value = searchInput
-//                                onSearch()
-//                            }
-//                        }
-                    }) {
+                    IconButton(
+                        onClick = {
+                            onSearchClick(searchParam)
+                            focusManager.clearFocus()
+                        },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = if (isSystemInDarkTheme())
+                                Color.White else
+                                Color.Black
+                        )
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            tint = MaterialTheme.colorScheme.primary,
                             contentDescription = null
                         )
                     }
                 }
             }
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchBarPrev() {
-    SearchBar(autoFocus = true) {
-
     }
 }

@@ -6,13 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.manubett.news.presentation.bookmark.BookMarkScreen
-import com.manubett.news.presentation.home.DetailScreen
-import com.manubett.news.presentation.home.HomeScreen
-import com.manubett.news.presentation.home.HomeViewModel
-import com.manubett.news.presentation.profile.ProfileScreen
-import com.manubett.news.presentation.search.SearchScreen
-import com.manubett.news.presentation.trending.TrendingScreen
+import com.manubett.news.feature_posts.presentation.bookmark.BookMarkScreen
+import com.manubett.news.feature_posts.presentation.home.DetailScreen
+import com.manubett.news.feature_posts.presentation.home.HomeScreen
+import com.manubett.news.feature_posts.presentation.home.HomeViewModel
+import com.manubett.news.feature_posts.presentation.profile.ProfileScreen
+import com.manubett.news.feature_posts.presentation.search.SearchScreen
+import com.manubett.news.feature_posts.presentation.trending.TrendingScreen
 
 @Composable
 fun NavGraph(
@@ -30,7 +30,7 @@ fun NavGraph(
            DetailScreen(navHostController,viewModel)
        }
        composable(Screens.SearchScreen.route){
-           SearchScreen()
+           SearchScreen(navHostController)
        }
        composable(Screens.TrendsScreen.route){
            TrendingScreen(navHostController)
