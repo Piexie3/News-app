@@ -1,4 +1,4 @@
-package com.manubett.news.feature_posts.data.dto
+package com.manubett.news.feature_posts.data.dto.newsDto
 
 data class Fields(
     val body: String,

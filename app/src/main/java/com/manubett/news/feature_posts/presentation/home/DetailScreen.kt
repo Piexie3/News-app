@@ -2,9 +2,9 @@ package com.manubett.news.feature_posts.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -71,33 +70,27 @@ fun DetailScreen(
         }
     ) { paddingValues ->
         val state = viewModel.newsListState.value
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .padding(4.dp)
-                .padding(paddingValues.calculateTopPadding())
+                .padding(top = paddingValues.calculateTopPadding())
         ) {
-            items(state.news) {
-                state.news.forEach {newsItem->
-                    Details(newsItem)
-                }
-
-            }
+            Details(state.newsItem)
         }
     }
 }
 
 @Composable
 fun Details(
-    newsItem: NewsItem
+    news: NewsItem?
 ) {
-    val viewModel: HomeViewModel = hiltViewModel()
-    val state = viewModel.newsListState.value
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-
         Column(
-            modifier = Modifier.wrapContentHeight()
+            modifier = Modifier.verticalScroll(scrollState)
         ) {
 
             Box(
@@ -105,10 +98,9 @@ fun Details(
                     .fillMaxWidth()
                     .height(280.dp)
             ) {
-
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(state.news[0].image)
+                        .data(news?.image)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.placeholder),
@@ -119,7 +111,6 @@ fun Details(
                     contentScale = ContentScale.Crop,
                     fallback = painterResource(id = R.drawable.placeholder)
                 )
-
                 Column(
                     modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 70.dp)
                 ) {
@@ -128,7 +119,7 @@ fun Details(
                             .padding(top = 3.dp, bottom = 10.dp)
                             .clip(RoundedCornerShape(45))
                     ) {
-                        state.news[0].sectionName?.let {
+                        news?.sectionName?.let {
                             Text(
                                 text = it,//"Health",
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp),
@@ -137,7 +128,7 @@ fun Details(
                         }
                     }
 
-                    state.news[0].headline?.let {
+                    news?.headline?.let {
                         Text(
                             text = it,
                             modifier = Modifier
@@ -153,7 +144,7 @@ fun Details(
                             )
                     }
 
-                    state.news[0].trailText?.let {
+                    news?.trailText?.let {
                         Text(
                             text = it,
                             modifier = Modifier
@@ -205,11 +196,9 @@ fun Details(
                             contentScale = ContentScale.FillBounds,
                             fallback = painterResource(id = R.drawable.placeholder)
                         )
-
-
-//                        newsItem.author?.forEach {author->
+                        news?.author?.forEach { author ->
                             Text(
-                                text = "author",//"Fahad Yassin",
+                                text = author,//"Fahad Yassin",
                                 style = TextStyle.Default,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -231,7 +220,7 @@ fun Details(
                         contentAlignment = Alignment.Center,
                     ) {
 
-                        state.news[0].lastModified?.let {
+                        news?.lastModified?.let {
                             Text(
                                 text = it, //"5 hours ago",
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
@@ -253,7 +242,7 @@ fun Details(
                             .padding(horizontal = 6.dp, vertical = 10.dp),
                         contentAlignment = Alignment.Center,
                     ) {
-                        state.news[0].productionOffice?.let {
+                        news?.productionOffice?.let {
                             Text(
                                 text = it,  //5 ratings",
                                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
@@ -268,7 +257,7 @@ fun Details(
 
 
                 //the whole news
-                state.news[0].bodyText?.let {
+                news?.bodyText?.let {
                     Text(
                         text = it,
                         modifier = Modifier
@@ -283,5 +272,5 @@ fun Details(
 
         }
     }
-//}
+}
 

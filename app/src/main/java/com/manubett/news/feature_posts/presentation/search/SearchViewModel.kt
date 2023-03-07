@@ -1,40 +1,34 @@
-package com.manubett.news.feature_posts.presentation.home
+package com.manubett.news.feature_posts.presentation.search
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.manubett.news.core.util.Constants.SEARCH_KEYWORD
 import com.manubett.news.core.util.Resource
-import com.manubett.news.feature_posts.domain.model.NewsDetails
-import com.manubett.news.feature_posts.domain.use_cases.GetNewsUseCases
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.manubett.news.feature_posts.domain.use_cases.SearchUseCase
+import com.manubett.news.feature_posts.presentation.home.NewsListState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-@HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getNewsUseCases: GetNewsUseCases,
+class SearchViewModel @Inject constructor(
+    private val searchUseCase: SearchUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
     private val _newsListState = mutableStateOf(NewsListState())
-    val newsListState: State<NewsListState> = _newsListState
+    val searchListState: State<NewsListState> = _newsListState
 
     init {
-        getArticles()
-    }
-    var details by mutableStateOf<NewsDetails?>(null)
-        private set
-
-    fun addDetails(newsDetails : NewsDetails){
-        details = newsDetails
+        savedStateHandle.get<String>(SEARCH_KEYWORD)?.let { query ->
+            getSearchedNews(query)
+        }
     }
 
-
-    private fun getArticles() {
-
-        getNewsUseCases().onEach { result ->
+    private fun getSearchedNews(query: String) {
+        searchUseCase(query = query).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _newsListState.value = NewsListState(news = result.data ?: emptyList())
@@ -49,6 +43,4 @@ class HomeViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-
 }

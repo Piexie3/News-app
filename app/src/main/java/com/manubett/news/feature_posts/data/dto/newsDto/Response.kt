@@ -1,6 +1,4 @@
-package com.manubett.news.feature_posts.data.dto
-
-import com.manubett.news.feature_posts.domain.model.NewsItem
+package com.manubett.news.feature_posts.data.dto.newsDto
 
 data class Response(
     val currentPage: Int,

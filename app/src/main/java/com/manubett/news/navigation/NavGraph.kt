@@ -3,9 +3,11 @@ package com.manubett.news.navigation
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.manubett.news.feature_posts.presentation.bookmark.BookMarkScreen
 import com.manubett.news.feature_posts.presentation.home.DetailScreen
 import com.manubett.news.feature_posts.presentation.home.HomeScreen
@@ -17,7 +19,7 @@ import com.manubett.news.feature_posts.presentation.trending.TrendingScreen
 @Composable
 fun NavGraph(
     navHostController: NavHostController = rememberNavController(),
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
    NavHost(
        navController = navHostController,
@@ -26,7 +28,18 @@ fun NavGraph(
        composable(Screens.HomeScreen.route){
            HomeScreen(navHostController)
        }
-       composable(Screens.DetailScreen.route){
+       composable(
+           route= Screens.DetailScreen.route + "?newsId={newsId}",
+           arguments = listOf(
+               navArgument(
+                   name = "newsId"
+               ) {
+                   type = NavType.StringType
+                   defaultValue = ""
+               }
+           )
+
+       ){
            DetailScreen(navHostController,viewModel)
        }
        composable(Screens.SearchScreen.route){

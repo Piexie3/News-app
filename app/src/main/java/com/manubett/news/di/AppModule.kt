@@ -5,6 +5,9 @@ import com.manubett.news.core.util.Constants.BASE_URL
 import com.manubett.news.feature_posts.data.remote.NewsApi
 import com.manubett.news.feature_posts.data.repository.NewsRepositoryImpl
 import com.manubett.news.feature_posts.domain.repository.NewsRepository
+import com.manubett.news.feature_posts.domain.use_cases.GetNewsDetailsUseCases
+import com.manubett.news.feature_posts.domain.use_cases.SearchUseCase
+import com.manubett.news.feature_posts.domain.use_cases.UseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,7 +40,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesGetNewsUseCase(repository: NewsRepository): GetNewsUseCases {
-        return GetNewsUseCases(repository)
+    fun providesGetUseCases(repository: NewsRepository): UseCases {
+        return UseCases(
+            getNewsDetailsUseCases = GetNewsDetailsUseCases(repository),
+            getNewsUseCases = GetNewsUseCases(repository),
+            searchUseCase = SearchUseCase(repository)
+        )
     }
 }

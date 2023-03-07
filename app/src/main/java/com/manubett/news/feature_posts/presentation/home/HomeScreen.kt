@@ -32,14 +32,16 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.manubett.news.R
 import com.manubett.news.core.composables.ProfileImage
+import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.domain.model.NewsItem
 import com.manubett.news.navigation.BottomNavItem
 import com.manubett.news.navigation.BottomNavMenu
+import com.manubett.news.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
@@ -67,7 +69,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .wrapContentHeight()
                     .clip(CircleShape),
-                contentColor =  if (isSystemInDarkTheme()) Color.White else Color.Black,
+                contentColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
             )
 
         },
@@ -75,9 +77,11 @@ fun HomeScreen(
             BottomAppBar(
                 modifier = Modifier
                     .height(48.dp),
-                containerColor =  if (isSystemInDarkTheme()) Color.Black.copy(.24f) else Color.White.copy(.24f),
+                containerColor = if (isSystemInDarkTheme()) Color.Black.copy(.24f) else Color.White.copy(
+                    .24f
+                ),
             ) {
-                BottomNavMenu(selectedItem = BottomNavItem.HOME,navController)
+                BottomNavMenu(selectedItem = BottomNavItem.HOME, navController)
             }
         }
     ) { paddingValues ->
@@ -93,7 +97,12 @@ fun HomeScreen(
                     )
             ) {
                 items(state.news) { news ->
-                    ImageCard(news, navController)
+
+                   ImageCard(
+                       news = news,
+                       viewModel = viewModel,
+                       navController = navController
+                   )
                 }
 
             }
@@ -122,10 +131,9 @@ fun HomeScreen(
 @Composable
 fun ImageCard(
     news: NewsItem,
+    viewModel: HomeViewModel,
     navController: NavController
 ) {
-    val viewModel: HomeViewModel = hiltViewModel()
-    val state = viewModel.newsListState.value
     val clicked by remember {
         mutableStateOf(true)
     }
@@ -134,28 +142,41 @@ fun ImageCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    ProfileImage (news = news, modifier = Modifier.size(48.dp)){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Row(
+                        modifier = Modifier.width(48.dp)
+                    ) {
+                        news.authorsImage?.forEach { authorsImage ->
+                            ProfileImage(image = authorsImage, modifier = Modifier.size(48.dp)) {
+
+                            }
+                        }
 
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    news.author.forEach { author->
+                    news.author?.forEach { author ->
                         Text(
-                            text = author.ifBlank { "Guardians" },
+                            text = author.ifEmpty { "Guardians" },
                             fontWeight = FontWeight.SemiBold,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
 
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "~ ${news.time}"
+                        text = "~ ${news.time}",
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
-                Row() {
+                Row {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
@@ -168,45 +189,48 @@ fun ImageCard(
                 }
             }
         }
-        news.image.let { image ->
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(image)
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(id = R.drawable.placeholder),
-                contentDescription = "Image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                    .clickable {
-//                        val newsDetails = NewsItem(
-//                            image = news.image,
-//                            title = news.title,
-//                            headline = news.headline,
-//                            time = news.time,
-//                            author = news.author,
-//                            authorsImage = news.authorsImage,
-//                            ratings = news.ratings,
-//                            sourcePublication = news.sourcePublication,
-//                            sectionName = news.sectionName,
-//                            bodyText = news.bodyText,
-//                            trailText = news.trailText,
-//                            body = news.body,
-//                            productionOffice = news.productionOffice,
-//                            lastModified = news.lastModified,
-//                        )
-//                        navController.navigate(Screens.DetailScreen.route) {
-//                            popUpTo(Screens.DetailScreen.route) {
-//                                inclusive = true
-//                            }
-//                        }
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(news.image)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(id = R.drawable.placeholder),
+            contentDescription = "Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .clickable {
+                    val newsDetail = NewsDetails(
+                        tagId = news.tagId,
+                        resultId = news.resultId,
+                        twitterHandle = news.twitterHandle,
+                        image = news.image,
+                        title = news.title, headline = news.headline,
+                        time = news.time,
+                        author = news.author,
+                        ratings = news.ratings,
+                        sourcePublication = news.sourcePublication,
+                        authorsImage = news.authorsImage,
+                        sectionName = news.sectionName,
+                        body = news.body,
+                        bodyText = news.bodyText,
+                        trailText = news.trailText,
+                        bio = news.bio,
+                        productionOffice = news.productionOffice,
+                        lastModified = news.lastModified,
+                        fullNames = news.fullNames, id = news.id
+                    )
+                    viewModel.addDetails(newsDetail)
+                    navController.navigate(Screens.DetailScreen.route + "?newsId=${news.id}") {
+                        popUpTo(Screens.DetailScreen.route + "?newsId=${news.id}") {
+                            inclusive = true
+                        }
                     }
-                    .clip(MaterialTheme.shapes.large),
-                fallback = painterResource(id = R.drawable.placeholder),
-            )
-        }
+                }
+                .clip(MaterialTheme.shapes.large),
+            fallback = painterResource(id = R.drawable.placeholder),
+        )
 
         Box {
             Row(
@@ -238,7 +262,7 @@ fun ImageCard(
                     modifier = Modifier.padding(end = 8.dp)
                 ) {
                     Icon(imageVector = Icons.Default.StarRate, contentDescription = "Rating")
-                    news.ratings?.let {rating->
+                    news.ratings?.let { rating ->
                         Text(
                             text = rating,
                             color = if (isSystemInDarkTheme()) Color.White else Color.Black

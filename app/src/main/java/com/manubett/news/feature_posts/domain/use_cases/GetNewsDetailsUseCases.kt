@@ -1,8 +1,8 @@
 package com.manubett.news.feature_posts.domain.use_cases
 
 import com.manubett.news.core.util.Resource
-import com.manubett.news.feature_posts.data.dto.newsDto.toNewsItem
-import com.manubett.news.feature_posts.domain.model.NewsItem
+import com.manubett.news.feature_posts.data.dto.newsDto.toNewsDetails
+import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -10,13 +10,13 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetNewsUseCases @Inject constructor(
+class GetNewsDetailsUseCases @Inject constructor(
     private val repository: NewsRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<NewsItem>>> = flow {
+    operator fun invoke(): Flow<Resource<List<NewsDetails>>> = flow {
         try {
             emit(Resource.Loading())
-            val article = repository.getNews().toNewsItem()
+            val article = repository.getNewsDetails().toNewsDetails()
             emit(Resource.Success(article))
 
         }catch(e: HttpException){

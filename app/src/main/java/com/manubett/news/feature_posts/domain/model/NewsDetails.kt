@@ -1,18 +1,21 @@
 package com.manubett.news.feature_posts.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class NewsItem(
-    val tagId : List<String>?,
-    val resultId : String?,
+@Parcelize
+class NewsDetails(
+    val tagId: List<String>?,
+    val resultId: String?,
     val twitterHandle: List<String>?,
     val image: String? = null,
-    val title:  String? = null,
-    val headline:  String? = null,
+    val title: String? = null,
+    val headline: String? = null,
     val time: String? = null,
-    val author:  List<String>? = emptyList(),
-    val ratings:  String? = null,
+    val author: List<String>? = emptyList(),
+    val ratings: String? = null,
     val sourcePublication: String? = null,
-    val authorsImage: List<String>? = null,//List<String>? = emptyList(), //checkOn
+    val authorsImage: List<String>? = emptyList(),//List<String>? = emptyList(), //checkOn
     val sectionName: String? = null,
     val bodyText: String? = null,
     val trailText: String? = null,
@@ -21,5 +24,5 @@ data class NewsItem(
     val productionOffice: String? = null,
     val lastModified: String? = null,
     val fullNames: String?,
-    val id : String?
-)
+    val id: String?
+): Parcelable

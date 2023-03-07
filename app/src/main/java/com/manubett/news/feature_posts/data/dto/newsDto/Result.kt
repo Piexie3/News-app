@@ -1,6 +1,4 @@
-package com.manubett.news.feature_posts.data.dto
-
-import com.manubett.news.feature_posts.data.dto.Fields
+package com.manubett.news.feature_posts.data.dto.newsDto
 
 data class Result(
     val apiUrl: String,
