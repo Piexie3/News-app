@@ -49,11 +49,8 @@ fun DetailScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            navController.navigate(Screens.HomeScreen.route) {
-                                popUpTo(Screens.HomeScreen.route) {
-                                    inclusive = true
-                                }
-                            }
+                            navController.popBackStack()
+
                         }) {
                         Icon(imageVector = Icons.Default.ArrowBackIos, contentDescription = "Back")
                     }
