@@ -1,7 +1,7 @@
 package com.manubett.news.feature_posts.domain.use_cases
 
 import com.manubett.news.core.util.Resource
-import com.manubett.news.feature_posts.data.dto.newsDto.toNewsDetails
+import com.manubett.news.feature_posts.data.dto.toNewsDetails
 import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow

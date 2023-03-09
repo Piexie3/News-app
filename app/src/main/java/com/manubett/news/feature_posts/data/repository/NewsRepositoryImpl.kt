@@ -2,7 +2,7 @@ package com.manubett.news.feature_posts.data.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.manubett.news.feature_posts.data.dto.newsDto.NewsDto
+import com.manubett.news.feature_posts.data.dto.NewsDto
 import com.manubett.news.feature_posts.data.remote.NewsApi
 import com.manubett.news.feature_posts.domain.repository.NewsRepository
 import javax.inject.Inject

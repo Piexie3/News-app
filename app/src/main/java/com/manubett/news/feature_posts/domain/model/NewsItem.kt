@@ -1,6 +1,5 @@
 package com.manubett.news.feature_posts.domain.model
 
-
 data class NewsItem(
     val tagId : List<String>?,
     val resultId : String?,

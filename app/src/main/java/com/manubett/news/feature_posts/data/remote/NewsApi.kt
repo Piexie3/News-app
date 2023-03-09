@@ -2,7 +2,7 @@ package com.manubett.news.feature_posts.data.remote
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.manubett.news.feature_posts.data.dto.newsDto.NewsDto
+import com.manubett.news.feature_posts.data.dto.NewsDto
 import com.manubett.news.core.util.usersCurrentDate
 import retrofit2.http.GET
 import retrofit2.http.Query

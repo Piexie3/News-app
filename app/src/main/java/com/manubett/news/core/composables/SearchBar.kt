@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier
@@ -69,7 +70,7 @@ fun SearchBar(
                     Color.White.copy(alpha = .24F),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                textColor = if (isSystemInDarkTheme())
+                focusedTextColor = if (isSystemInDarkTheme())
                     Color.White else
                     Color.Black
             ), keyboardOptions = KeyboardOptions(

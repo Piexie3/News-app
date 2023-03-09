@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.manubett.news.feature_posts.presentation.SplashScreen
 import com.manubett.news.feature_posts.presentation.bookmark.BookMarkScreen
 import com.manubett.news.feature_posts.presentation.home.DetailScreen
 import com.manubett.news.feature_posts.presentation.home.HomeScreen
@@ -53,6 +54,9 @@ fun NavGraph(
        }
        composable(Screens.BookMarkScreen.route){
            BookMarkScreen(navHostController)
+       }
+       composable(Screens.SplashScreen.route){
+           SplashScreen()
        }
    }
 }
