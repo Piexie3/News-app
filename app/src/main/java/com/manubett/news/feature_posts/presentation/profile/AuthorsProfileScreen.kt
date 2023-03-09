@@ -63,8 +63,6 @@ fun AuthorsProfileScreen(
                             listOf(
                                 Color.Transparent,
                                 MaterialTheme.colorScheme.background,
-                                MaterialTheme.colorScheme.background,
-                                MaterialTheme.colorScheme.background,
                             ),
                             startY = 210f
                         )
@@ -74,11 +72,26 @@ fun AuthorsProfileScreen(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.BottomStart)
-                    .padding(start = 10.dp)
+                    .padding(start = 8.dp, bottom = 2.dp)
             ) {
+                Row (verticalAlignment = Alignment.CenterVertically){
+                    ProfileImage(image = link1, modifier = Modifier.size(50.dp)) {
 
-                ProfileImage(image = link1) {
-
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Column(verticalArrangement = Arrangement.Center){
+                        Text(
+                            text = "Manu Bett",
+                            color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(
+                            text = "@manubett",
+                            color = lightBlue,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Light
+                        )
+                    }
                 }
             }
             Box(modifier = Modifier.clip(RoundedCornerShape(100))) {
@@ -126,32 +139,8 @@ fun AuthorsProfileScreen(
             }
         }
     }
-
-    @Composable
-    fun Profile(
-        onClicked: () -> Unit,
-        news: NewsItem
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            val link1 =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/XXXTENTACION_mugshot_12_28_2016.jpg/800px-XXXTENTACION_mugshot_12_28_2016.jpg"
-            ProfileImage(image = link1) {
-
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Manu Bett",
-                color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                style = MaterialTheme.typography.bodySmall
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "@manubett",
-                color = lightBlue,
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Light
-            )
-        }
-    }
 }
+
+
+
 
