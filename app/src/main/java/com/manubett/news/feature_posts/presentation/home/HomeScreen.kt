@@ -34,15 +34,16 @@ import com.manubett.news.R
 import com.manubett.news.core.composables.ProfileImage
 import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.domain.model.NewsItem
+import com.manubett.news.feature_posts.presentation.SharedViewModel
 import com.manubett.news.navigation.BottomNavItem
 import com.manubett.news.navigation.BottomNavMenu
 import com.manubett.news.navigation.Screens
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
 ) {
+    val sharedViewModel : SharedViewModel = hiltViewModel()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -100,7 +101,7 @@ fun HomeScreen(
 
                    ImageCard(
                        news = news,
-                       viewModel = viewModel,
+                       sharedViewModel = sharedViewModel,
                        navController = navController
                    )
                 }
@@ -131,7 +132,7 @@ fun HomeScreen(
 @Composable
 fun ImageCard(
     news: NewsItem,
-    viewModel: HomeViewModel,
+    sharedViewModel: SharedViewModel,
     navController: NavController
 ) {
     val clicked by remember {
@@ -201,29 +202,31 @@ fun ImageCard(
                 .padding(8.dp)
                 .fillMaxWidth()
                 .clickable {
-                    val newsDetail = NewsDetails(
-                        tagId = news.tagId,
-                        resultId = news.resultId,
-                        twitterHandle = news.twitterHandle,
+                    val newsDetails = NewsDetails(
                         image = news.image,
-                        title = news.title, headline = news.headline,
+                        title = news.title,
+                        headline = news.headline,
                         time = news.time,
                         author = news.author,
+                        authorsImage = news.authorsImage,
                         ratings = news.ratings,
                         sourcePublication = news.sourcePublication,
-                        authorsImage = news.authorsImage,
                         sectionName = news.sectionName,
-                        body = news.body,
                         bodyText = news.bodyText,
                         trailText = news.trailText,
-                        bio = news.bio,
+                        body = news.body,
                         productionOffice = news.productionOffice,
                         lastModified = news.lastModified,
-                        fullNames = news.fullNames, id = news.id
+                        twitterHandle = news.twitterHandle,
+                        tagId = news.tagId,
+                        bio = news.bio,
+                        resultId = news.resultId,
+                        fullNames = news.fullNames,
+                        id = news.id
                     )
-                    viewModel.addDetails(newsDetail)
-                    navController.navigate(Screens.DetailScreen.route + "?newsId=${news.id}") {
-                        popUpTo(Screens.DetailScreen.route + "?newsId=${news.id}") {
+                    sharedViewModel.addDetails(newsDetails)
+                    navController.navigate(route = Screens.DetailScreen.route) {
+                        popUpTo(Screens.DetailScreen.route) {
                             inclusive = true
                         }
                     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ enum class BottomNavItem(val icon: ImageVector, val route: String){
     TREND(Icons.Outlined.Whatshot, Screens.TrendsScreen.route),
     SEARCH(Icons.Outlined.Search, Screens.SearchScreen.route),
     BOOKMARK(Icons.Outlined.Bookmarks, Screens.BookMarkScreen.route),
+    PROFILE(Icons.Default.AccountCircle, Screens.ProfileScreen.route)
 }
 
 @Composable
@@ -55,19 +57,19 @@ fun BottomNavMenu(
                     ColorFilter.tint(Color.DarkGray)
             )
         }
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(R.drawable.profile)
-                .crossfade(true)
-                .build(),
-            contentDescription = "Profile",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(33.dp)
-                .clickable {
-                    navController.navigate(Screens.ProfileScreen.route)
-                }
-        )
+//        AsyncImage(
+//            model = ImageRequest.Builder(LocalContext.current)
+//                .data(R.drawable.profile)
+//                .crossfade(true)
+//                .build(),
+//            contentDescription = "Profile",
+//            contentScale = ContentScale.Crop,
+//            modifier = Modifier
+//                .clip(CircleShape)
+//                .size(33.dp)
+//                .clickable {
+//                    navController.navigate(Screens.ProfileScreen.route)
+//                }
+//        )
     }
 }

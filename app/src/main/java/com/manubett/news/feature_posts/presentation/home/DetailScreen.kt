@@ -25,19 +25,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.manubett.news.R
+import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.domain.model.NewsItem
+import com.manubett.news.feature_posts.presentation.SharedViewModel
 import com.manubett.news.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     navController: NavController,
-    viewModel: HomeViewModel
+
 ) {
+    val sharedViewModel: SharedViewModel= hiltViewModel()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -50,7 +54,6 @@ fun DetailScreen(
                     IconButton(
                         onClick = {
                             navController.popBackStack()
-
                         }) {
                         Icon(imageVector = Icons.Default.ArrowBackIos, contentDescription = "Back")
                     }
@@ -66,20 +69,20 @@ fun DetailScreen(
             )
         }
     ) { paddingValues ->
-        val state = viewModel.newsListState.value
+        val state = sharedViewModel.details
         Column(
             modifier = Modifier
                 .padding(4.dp)
                 .padding(top = paddingValues.calculateTopPadding())
         ) {
-            Details(state.newsItem)
+            Details(state)
         }
     }
 }
 
 @Composable
 fun Details(
-    news: NewsItem?
+    news: NewsDetails?
 ) {
     val scrollState = rememberScrollState()
 

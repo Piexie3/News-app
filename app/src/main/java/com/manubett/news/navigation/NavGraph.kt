@@ -30,18 +30,8 @@ fun NavGraph(
            HomeScreen(navHostController)
        }
        composable(
-           route= Screens.DetailScreen.route + "?newsId={newsId}",
-           arguments = listOf(
-               navArgument(
-                   name = "newsId"
-               ) {
-                   type = NavType.StringType
-                   defaultValue = ""
-               }
-           )
-
-       ){
-           DetailScreen(navHostController,viewModel)
+           route= Screens.DetailScreen.route ){
+           DetailScreen(navHostController)
        }
        composable(Screens.SearchScreen.route){
            SearchScreen(navHostController)
