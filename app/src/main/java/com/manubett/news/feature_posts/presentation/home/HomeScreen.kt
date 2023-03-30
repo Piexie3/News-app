@@ -42,8 +42,8 @@ import com.manubett.news.navigation.Screens
 @Composable
 fun HomeScreen(
     navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
-    val sharedViewModel : SharedViewModel = hiltViewModel()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -97,14 +97,16 @@ fun HomeScreen(
                         top = paddingValues.calculateTopPadding()
                     )
             ) {
-                items(state.news) { news ->
-
-                   ImageCard(
-                       news = news,
-                       sharedViewModel = sharedViewModel,
-                       navController = navController
-                   )
+                if (state.news?.isNotEmpty() == true){
+                    items(state.news) { news ->
+                        ImageCard(
+                            news = news,
+                            sharedViewModel = sharedViewModel,
+                            navController = navController
+                        )
+                    }
                 }
+
 
             }
             if (state.error.isNotBlank()) {
@@ -171,6 +173,7 @@ fun ImageCard(
                         )
                     }
 
+
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "~ ${news.time}",
@@ -225,6 +228,7 @@ fun ImageCard(
                         id = news.id
                     )
                     sharedViewModel.addDetails(newsDetails)
+
                     navController.navigate(route = Screens.DetailScreen.route) {
                         popUpTo(Screens.DetailScreen.route) {
                             inclusive = true
@@ -235,63 +239,65 @@ fun ImageCard(
             fallback = painterResource(id = R.drawable.placeholder),
         )
 
-        Box {
+    }
+
+    Box {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = if (clicked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "favourite"
+                    )
+                }
+                Text(text = "128")
+                Spacer(modifier = Modifier.width(16.dp))
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Default.Chat, contentDescription = "Chats")
+                }
+                Text(text = "80")
+                Spacer(modifier = Modifier.width(16.dp))
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Default.Share, contentDescription = "share")
+                }
+                Text(text = "1.2k")
+            }
             Row(
-                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.padding(end = 8.dp)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = if (clicked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "favourite"
-                        )
-                    }
-                    Text(text = "128")
-                    Spacer(modifier = Modifier.width(16.dp))
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Default.Chat, contentDescription = "Chats")
-                    }
-                    Text(text = "80")
-                    Spacer(modifier = Modifier.width(16.dp))
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Default.Share, contentDescription = "share")
-                    }
-                    Text(text = "1.2k")
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    Icon(imageVector = Icons.Default.StarRate, contentDescription = "Rating")
-                    news.ratings?.let { rating ->
-                        Text(
-                            text = rating,
-                            color = if (isSystemInDarkTheme()) Color.White else Color.Black
-                        )
-                    }
+                Icon(imageVector = Icons.Default.StarRate, contentDescription = "Rating")
+                news.ratings?.let { rating ->
+                    Text(
+                        text = rating,
+                        color = if (isSystemInDarkTheme()) Color.White else Color.Black
+                    )
                 }
             }
-        }
-
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            news.title?.let {
-                Text(
-                    text = it,
-                    fontWeight = FontWeight.ExtraBold,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontFamily = FontFamily.Serif,
-                    color = Color.Cyan,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-
         }
     }
-    Spacer(modifier = Modifier.height(8.dp))
-    Divider()
-    Spacer(modifier = Modifier.height(6.dp))
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        news.title?.let {
+            Text(
+                text = it,
+                fontWeight = FontWeight.ExtraBold,
+                style = MaterialTheme.typography.titleSmall,
+                fontFamily = FontFamily.Serif,
+                color = Color.Cyan,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Divider()
+        Spacer(modifier = Modifier.height(6.dp))
+    }
 }
+
 

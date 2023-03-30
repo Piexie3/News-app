@@ -35,13 +35,12 @@ import com.manubett.news.feature_posts.domain.model.NewsItem
 import com.manubett.news.feature_posts.presentation.SharedViewModel
 import com.manubett.news.navigation.Screens
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     navController: NavController,
-
+    sharedViewModel: SharedViewModel
 ) {
-    val sharedViewModel: SharedViewModel= hiltViewModel()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -65,7 +64,8 @@ fun DetailScreen(
                             contentDescription = "Add Bookmark"
                         )
                     }
-                }
+                },
+                backgroundColor = Color.Transparent
             )
         }
     ) { paddingValues ->
@@ -85,7 +85,6 @@ fun Details(
     news: NewsDetails?
 ) {
     val scrollState = rememberScrollState()
-
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -158,10 +157,10 @@ fun Details(
 
 
             Column(
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.background
-                    ),
+//                modifier = Modifier
+//                    .background(
+//                        MaterialTheme.colorScheme.background
+//                    ),
             ) {
                 Row(
                     modifier = Modifier
@@ -183,19 +182,21 @@ fun Details(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
 
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-//                                .data(state.news[0].authorsImage)
-                                .crossfade(true)
-                                .build(),
-                            placeholder = painterResource(R.drawable.placeholder),
-                            contentDescription = "Author image",
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(50))
-                                .size(30.dp),
-                            contentScale = ContentScale.FillBounds,
-                            fallback = painterResource(id = R.drawable.placeholder)
-                        )
+                        news?.authorsImage?.forEach {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(it)
+                                    .crossfade(true)
+                                    .build(),
+                                placeholder = painterResource(R.drawable.placeholder),
+                                contentDescription = "Author image",
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(50))
+                                    .size(30.dp),
+                                contentScale = ContentScale.FillBounds,
+                                fallback = painterResource(id = R.drawable.placeholder)
+                            )
+                        }
                         news?.author?.forEach { author ->
                             Text(
                                 text = author,//"Fahad Yassin",

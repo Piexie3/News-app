@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.manubett.news.feature_posts.presentation.SharedViewModel
 import com.manubett.news.feature_posts.presentation.SplashScreen
 import com.manubett.news.feature_posts.presentation.bookmark.BookMarkScreen
 import com.manubett.news.feature_posts.presentation.home.DetailScreen
@@ -20,18 +21,18 @@ import com.manubett.news.feature_posts.presentation.trending.TrendingScreen
 @Composable
 fun NavGraph(
     navHostController: NavHostController = rememberNavController(),
-    viewModel: HomeViewModel = hiltViewModel(),
+    sharedViewModel: SharedViewModel = hiltViewModel()
 ) {
    NavHost(
        navController = navHostController,
        startDestination = Screens.HomeScreen.route
    ) {
        composable(Screens.HomeScreen.route){
-           HomeScreen(navHostController)
+           HomeScreen(navHostController,sharedViewModel)
        }
        composable(
            route= Screens.DetailScreen.route ){
-           DetailScreen(navHostController)
+           DetailScreen(navHostController,sharedViewModel)
        }
        composable(Screens.SearchScreen.route){
            SearchScreen(navHostController)

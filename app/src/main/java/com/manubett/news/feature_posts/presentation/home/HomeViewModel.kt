@@ -24,15 +24,8 @@ class HomeViewModel @Inject constructor(
     init {
         getArticles()
     }
-    var details by mutableStateOf<NewsDetails?>(null)
-        private set
 
-    fun addDetails(newsDetails : NewsDetails){
-        details = newsDetails
-    }
-
-
-    private fun getArticles() {
+      private fun getArticles() {
 
         getNewsUseCases().onEach { result ->
             when (result) {

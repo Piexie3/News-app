@@ -4,8 +4,7 @@ import com.manubett.news.feature_posts.domain.model.NewsItem
 
 data class NewsListState(
     val isLoading: Boolean = false,
-    val news: List<NewsItem> = emptyList(),
-    val newsItem: NewsItem? = null,
+    val news: List<NewsItem>? = null,
     val error: String = "",
     val search: String = ""
 )

@@ -13,8 +13,7 @@ import javax.inject.Inject
 class SharedViewModel
 @Inject
 constructor(
-//        private val newsDetailsUseCase: NewsDetailsUseCase,
-    savedStateHandle: SavedStateHandle
+
 ) : ViewModel() {
 
 
