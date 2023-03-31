@@ -97,7 +97,7 @@ fun HomeScreen(
                         top = paddingValues.calculateTopPadding()
                     )
             ) {
-                if (state.news?.isNotEmpty() == true){
+                if (state.news?.isNotEmpty() == true) {
                     items(state.news) { news ->
                         ImageCard(
                             news = news,
@@ -157,21 +157,52 @@ fun ImageCard(
                     ) {
                         news.authorsImage?.forEach { authorsImage ->
                             ProfileImage(image = authorsImage, modifier = Modifier.size(48.dp)) {
+                                val newsDetails = NewsDetails(
+                                    image = news.image,
+                                    title = news.title,
+                                    headline = news.headline,
+                                    time = news.time,
+                                    author = news.author,
+                                    authorsImage = news.authorsImage,
+                                    ratings = news.ratings,
+                                    sourcePublication = news.sourcePublication,
+                                    sectionName = news.sectionName,
+                                    bodyText = news.bodyText,
+                                    trailText = news.trailText,
+                                    body = news.body,
+                                    productionOffice = news.productionOffice,
+                                    lastModified = news.lastModified,
+                                    twitterHandle = news.twitterHandle,
+                                    tagId = news.tagId,
+                                    bio = news.bio,
+                                    resultId = news.resultId,
+                                    fullNames = news.fullNames,
+                                    id = news.id,
+                                    description = news.description,
+                                    lastName = news.lastName,
+                                    firstName = news.firstName
+                                )
+                                sharedViewModel.addDetails(newsDetails)
 
+                                navController.navigate(route = Screens.AuthorsDetailsScreen.route) {
+                                    popUpTo(Screens.AuthorsDetailsScreen.route) {
+                                        inclusive = true
+                                    }
+                                }
                             }
                         }
 
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    news.author?.forEach { author ->
-                        Text(
-                            text = author.ifEmpty { "Guardians" },
-                            fontWeight = FontWeight.SemiBold,
-                            textAlign = TextAlign.Center,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
+//                    news.author?.forEach { author ->
+//                        Text(
+//                            text = author.ifEmpty { "Guardians" },
+//                            fontWeight = FontWeight.SemiBold,
+//                            textAlign = TextAlign.Center,
+//                            overflow = TextOverflow.Ellipsis,
+//                            style = MaterialTheme.typography.bodySmall
+//                        )
+//                    }
 
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -225,7 +256,10 @@ fun ImageCard(
                         bio = news.bio,
                         resultId = news.resultId,
                         fullNames = news.fullNames,
-                        id = news.id
+                        id = news.id,
+                        description = news.description,
+                        lastName = news.lastName,
+                        firstName = news.firstName
                     )
                     sharedViewModel.addDetails(newsDetails)
 

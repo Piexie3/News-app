@@ -49,6 +49,9 @@ fun NewsDto.toNewsItem(): List<NewsItem> {
             bio = result.tags.map { it.bio },
             fullNames = "${result.tags.map { it.firstName }} ${result.tags.map { it.lastName }}",
             id = result.id,
+            description = result.tags.map { it.description },
+            firstName = result.tags.map { it.firstName },
+            lastName = result.tags.map { it.lastName }
         )
     }
 }
@@ -95,6 +98,9 @@ fun NewsDto.toNewsDetails(): List<NewsDetails> {
             bio = result.tags.map { it.bio },
             fullNames = "${result.tags.map { it.firstName }} ${result.tags.map { it.lastName }}",
             id = result.id,
+            description = result.tags.map { it.description },
+            firstName = result.tags.map { it.firstName },
+            lastName = result.tags.map { it.lastName }
         )
     }
 }

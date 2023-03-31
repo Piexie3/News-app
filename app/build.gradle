@@ -118,6 +118,10 @@ dependencies {
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+
+    //FlowRow
+    implementation 'com.google.accompanist:accompanist-flowlayout:0.17.0'
+
     // Accompanist
     implementation "com.google.accompanist:accompanist-pager:0.28.0" // Pager
     implementation "com.google.accompanist:accompanist-pager-indicators:0.28.0" // Pager Indicators

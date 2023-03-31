@@ -20,9 +20,12 @@ class NewsDetails(
     val bodyText: String? = null,
     val trailText: String? = null,
     val body: String? = null,
-    val bio: List<String>,
+    val bio: List<String>?,
     val productionOffice: String? = null,
     val lastModified: String? = null,
     val fullNames: String?,
-    val id: String?
+    val id: String?,
+    val description: List<String>?=null,
+    val lastName: List<String>?=null,
+    val firstName: List<String>? =null
 ): Parcelable

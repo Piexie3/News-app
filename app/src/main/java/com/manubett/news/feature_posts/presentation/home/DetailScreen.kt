@@ -19,28 +19,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.manubett.news.R
 import com.manubett.news.feature_posts.domain.model.NewsDetails
-import com.manubett.news.feature_posts.domain.model.NewsItem
 import com.manubett.news.feature_posts.presentation.SharedViewModel
-import com.manubett.news.navigation.Screens
 
 @Composable
 fun DetailScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel
 ) {
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -53,7 +47,8 @@ fun DetailScreen(
                     IconButton(
                         onClick = {
                             navController.popBackStack()
-                        }) {
+                        }
+                    ) {
                         Icon(imageVector = Icons.Default.ArrowBackIos, contentDescription = "Back")
                     }
                 },
@@ -111,7 +106,11 @@ fun Details(
                     fallback = painterResource(id = R.drawable.placeholder)
                 )
                 Column(
-                    modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 70.dp)
+                    modifier = Modifier
+                        .padding(start = 15.dp, end = 15.dp, top = 70.dp)
+                        .align(
+                            Alignment.BottomStart
+                        )
                 ) {
                     Box(
                         modifier = Modifier
@@ -126,7 +125,6 @@ fun Details(
                             )
                         }
                     }
-
                     news?.headline?.let {
                         Text(
                             text = it,
@@ -134,21 +132,11 @@ fun Details(
                                 .padding(bottom = 5.dp, end = 5.dp)
                                 .fillMaxWidth(0.9f),
                             textAlign = TextAlign.Start,
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Cyan,
                             maxLines = 3,
                             fontWeight = FontWeight.Bold,
                             overflow = TextOverflow.Ellipsis,
-
-                            )
-                    }
-
-                    news?.trailText?.let {
-                        Text(
-                            text = it,
-                            modifier = Modifier
-                                .padding(end = 5.dp, top = 3.dp, bottom = 10.dp),
-                            color = MaterialTheme.colorScheme.inverseOnSurface,
                         )
                     }
                 }
@@ -157,10 +145,10 @@ fun Details(
 
 
             Column(
-//                modifier = Modifier
-//                    .background(
-//                        MaterialTheme.colorScheme.background
-//                    ),
+                modifier = Modifier
+                    .background(
+                        MaterialTheme.colorScheme.background
+                    ),
             ) {
                 Row(
                     modifier = Modifier
@@ -197,18 +185,18 @@ fun Details(
                                 fallback = painterResource(id = R.drawable.placeholder)
                             )
                         }
-                        news?.author?.forEach { author ->
-                            Text(
-                                text = author,//"Fahad Yassin",
-                                style = TextStyle.Default,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                fontSize = 18.sp,
-                                modifier = Modifier
-                                    .padding(start = 6.dp),
-                                color = MaterialTheme.colorScheme.onBackground,
-                            )
-                        }
+//                        news?.author?.forEach { author ->
+//                            Text(
+//                                text = author,//"Fahad Yassin",
+//                                style = TextStyle.Default,
+//                                maxLines = 1,
+//                                overflow = TextOverflow.Ellipsis,
+//                                fontSize = 18.sp,
+//                                modifier = Modifier
+//                                    .padding(start = 6.dp),
+//                                color = MaterialTheme.colorScheme.onBackground,
+//                            )
+//                        }
 
 
                     }

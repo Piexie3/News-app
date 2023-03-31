@@ -18,43 +18,71 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
 import com.manubett.news.R
 import com.manubett.news.core.composables.ProfileImage
-import com.manubett.news.feature_posts.domain.model.NewsItem
-import com.manubett.news.feature_posts.presentation.home.HomeViewModel
+import com.manubett.news.feature_posts.domain.model.NewsDetails
+import com.manubett.news.feature_posts.presentation.SharedViewModel
 import com.manubett.news.ui.theme.lightBlue
 
 
 @Composable
 fun AuthorsProfileScreen(
-    viewModel: HomeViewModel
-//    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
-    val link1 =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/XXXTENTACION_mugshot_12_28_2016.jpg/800px-XXXTENTACION_mugshot_12_28_2016.jpg"
-    val state = viewModel.newsListState.value
+
+    Scaffold() { paddingValues ->
+        val state = sharedViewModel.details
+        Column(
+            modifier = Modifier
+                .padding(4.dp)
+                .padding(top = paddingValues.calculateTopPadding())
+        ) {
+            AuthorsDetails(state,navController)
+        }
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun AuthorsDetails(
+    news: NewsDetails?,
+    navController: NavController
+) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
                 .height(180.dp)
-
                 .fillMaxWidth()
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.post)
-                    .crossfade(durationMillis = 250)
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_broken_image)
-                    .fallback(R.drawable.placeholder)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop
-            )
+
+
+            news?.authorsImage?.forEach { image->
+                news.authorsImage.size.let {it->
+                    HorizontalPager(count = it) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(image)
+                                .crossfade(durationMillis = 250)
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_broken_image)
+                                .fallback(R.drawable.placeholder)
+                                .build(),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+            }
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -68,35 +96,45 @@ fun AuthorsProfileScreen(
                         )
                     )
             )
-            Box(
-                modifier = Modifier
-                    .wrapContentSize()
-                    .align(Alignment.BottomStart)
-                    .padding(start = 8.dp, bottom = 2.dp)
-            ) {
-                Row (verticalAlignment = Alignment.CenterVertically){
-                    ProfileImage(image = link1, modifier = Modifier.size(50.dp)) {
-
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Column(verticalArrangement = Arrangement.Center){
-                        Text(
-                            text = "Manu Bett",
-                            color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                        Text(
-                            text = "@manubett",
-                            color = lightBlue,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Light
-                        )
-                    }
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .wrapContentSize()
+//                    .align(Alignment.BottomStart)
+//                    .padding(start = 8.dp, bottom = 2.dp)
+//            ) {
+//                Box() {
+//                    news?.authorsImage?.forEach {
+//                        ProfileImage(image = it, modifier = Modifier.size(50.dp)) {
+//
+//                        }
+//                    }
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    Column(verticalArrangement = Arrangement.Center) {
+//                        news?.fullNames?.let { fullName ->
+//                            Text(
+//                                text = fullName,
+//                                color = if (isSystemInDarkTheme()) Color.White else Color.Black,
+//                                style = MaterialTheme.typography.bodySmall
+//                            )
+//                        }
+//                        news?.firstName?.forEach { firstName ->
+//                            news.lastName?.forEach { lastName ->
+//                                Text(
+//                                    text = "@${firstName}_${lastName}",
+//                                    color = lightBlue,
+//                                    style = MaterialTheme.typography.bodySmall,
+//                                    fontWeight = FontWeight.Light
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             Box(modifier = Modifier.clip(RoundedCornerShape(100))) {
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navController.popBackStack()
+                    },
                     colors = IconButtonDefaults.iconButtonColors(
                         containerColor = if (isSystemInDarkTheme())
                             Color.Black.copy(.5f) else
@@ -132,13 +170,29 @@ fun AuthorsProfileScreen(
                     )
                 ) {
                     Text(
-                        text = "Edit profile",
+                        text = "Follow",
                         color = if (isSystemInDarkTheme()) Color.Black else Color.White,
                     )
                 }
             }
         }
+//        Column(
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.padding(horizontal = 10.dp)
+//        ) {
+//            news?.description?.forEach { description->
+//                Text(
+//                    text = description,
+//                )
+//            }
+//            news?.bio?.forEach { bio ->
+//                Text(
+//                    text = bio,
+//                )
+//            }
+//        }
     }
+
 }
 
 

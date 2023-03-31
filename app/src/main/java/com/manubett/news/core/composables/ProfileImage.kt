@@ -39,7 +39,7 @@ fun ProfileImage(
             )
             .padding(2.dp)
             .clickable {
-                onClicked
+                onClicked()
             }
 
     ) {

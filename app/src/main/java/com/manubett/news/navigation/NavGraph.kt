@@ -14,6 +14,7 @@ import com.manubett.news.feature_posts.presentation.bookmark.BookMarkScreen
 import com.manubett.news.feature_posts.presentation.home.DetailScreen
 import com.manubett.news.feature_posts.presentation.home.HomeScreen
 import com.manubett.news.feature_posts.presentation.home.HomeViewModel
+import com.manubett.news.feature_posts.presentation.profile.AuthorsProfileScreen
 import com.manubett.news.feature_posts.presentation.profile.ProfileScreen
 import com.manubett.news.feature_posts.presentation.search.SearchScreen
 import com.manubett.news.feature_posts.presentation.trending.TrendingScreen
@@ -48,6 +49,9 @@ fun NavGraph(
        }
        composable(Screens.SplashScreen.route){
            SplashScreen()
+       }
+       composable(Screens.AuthorsDetailsScreen.route){
+           AuthorsProfileScreen(navHostController,sharedViewModel)
        }
    }
 }
