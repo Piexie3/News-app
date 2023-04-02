@@ -8,7 +8,7 @@ data class NewsItem(
     val title:  String? = null,
     val headline:  String? = null,
     val time: String? = null,
-    val author:  List<String>? = emptyList(),
+    val author:  List<String>?,
     val ratings:  String? = null,
     val sourcePublication: String? = null,
     val authorsImage: List<String>? = null,//List<String>? = emptyList(), //checkOn

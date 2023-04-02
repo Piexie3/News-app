@@ -23,12 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.manubett.news.R
 import com.manubett.news.feature_posts.domain.model.NewsDetails
 import com.manubett.news.feature_posts.presentation.SharedViewModel
+import java.time.format.TextStyle
 
 @Composable
 fun DetailScreen(
@@ -166,6 +168,7 @@ fun Details(
                             .background(
                                 MaterialTheme.colorScheme.background
                             )
+                            .fillMaxWidth(.45f)
                             .padding(start = 3.dp, top = 3.dp, bottom = 3.dp, end = 15.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -185,18 +188,18 @@ fun Details(
                                 fallback = painterResource(id = R.drawable.placeholder)
                             )
                         }
-//                        news?.author?.forEach { author ->
-//                            Text(
-//                                text = author,//"Fahad Yassin",
-//                                style = TextStyle.Default,
-//                                maxLines = 1,
-//                                overflow = TextOverflow.Ellipsis,
-//                                fontSize = 18.sp,
-//                                modifier = Modifier
-//                                    .padding(start = 6.dp),
-//                                color = MaterialTheme.colorScheme.onBackground,
-//                            )
-//                        }
+                        news?.author?.forEach { author ->
+                            Text(
+                                text = author,//"Fahad Yassin",
+                                style = MaterialTheme.typography.titleSmall,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .padding(start = 6.dp),
+                                color = MaterialTheme.colorScheme.onBackground,
+                            )
+                        }
 
 
                     }

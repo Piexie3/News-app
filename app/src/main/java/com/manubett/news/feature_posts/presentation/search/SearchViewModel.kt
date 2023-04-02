@@ -9,10 +9,12 @@ import com.manubett.news.core.util.Constants.SEARCH_KEYWORD
 import com.manubett.news.core.util.Resource
 import com.manubett.news.feature_posts.domain.use_cases.SearchUseCase
 import com.manubett.news.feature_posts.presentation.home.NewsListState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
     savedStateHandle: SavedStateHandle
@@ -28,7 +30,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun getSearchedNews(query: String) {
-        searchUseCase(query = query).onEach { result ->
+        searchUseCase(query).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _newsListState.value = NewsListState(news = result.data ?: emptyList())

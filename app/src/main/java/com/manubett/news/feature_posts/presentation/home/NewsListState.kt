@@ -6,5 +6,4 @@ data class NewsListState(
     val isLoading: Boolean = false,
     val news: List<NewsItem>? = null,
     val error: String = "",
-    val search: String = ""
 )

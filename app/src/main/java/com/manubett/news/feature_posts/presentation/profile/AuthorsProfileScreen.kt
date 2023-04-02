@@ -3,6 +3,7 @@ package com.manubett.news.feature_posts.presentation.profile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,7 +44,7 @@ fun AuthorsProfileScreen(
                 .padding(4.dp)
                 .padding(top = paddingValues.calculateTopPadding())
         ) {
-            AuthorsDetails(state,navController)
+            AuthorsDetails(state, navController)
         }
     }
 }
@@ -64,8 +65,8 @@ fun AuthorsDetails(
         ) {
 
 
-            news?.authorsImage?.forEach { image->
-                news.authorsImage.size.let {it->
+            news?.authorsImage?.forEach { image ->
+                news.authorsImage.size.let { it ->
                     HorizontalPager(count = it) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -96,40 +97,35 @@ fun AuthorsDetails(
                         )
                     )
             )
-//            Row(
-//                modifier = Modifier
-//                    .wrapContentSize()
-//                    .align(Alignment.BottomStart)
-//                    .padding(start = 8.dp, bottom = 2.dp)
-//            ) {
-//                Box() {
-//                    news?.authorsImage?.forEach {
-//                        ProfileImage(image = it, modifier = Modifier.size(50.dp)) {
-//
-//                        }
-//                    }
-//                    Spacer(modifier = Modifier.height(8.dp))
-//                    Column(verticalArrangement = Arrangement.Center) {
-//                        news?.fullNames?.let { fullName ->
-//                            Text(
-//                                text = fullName,
-//                                color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-//                                style = MaterialTheme.typography.bodySmall
-//                            )
-//                        }
-//                        news?.firstName?.forEach { firstName ->
-//                            news.lastName?.forEach { lastName ->
-//                                Text(
-//                                    text = "@${firstName}_${lastName}",
-//                                    color = lightBlue,
-//                                    style = MaterialTheme.typography.bodySmall,
-//                                    fontWeight = FontWeight.Light
-//                                )
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            LazyRow(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .align(Alignment.BottomStart)
+                    .padding(start = 8.dp, bottom = 2.dp)
+            ) {
+                item {
+                    Box {
+                        Column(verticalArrangement = Arrangement.Center) {
+                            news?.authorsImage?.forEach {
+                                ProfileImage(image = it, modifier = Modifier.size(50.dp)) {
+
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            news?.firstName?.forEach { firstName ->
+                                news.lastName?.forEach { lastName ->
+                                    Text(
+                                        text = "$firstName $lastName",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = FontWeight.Light
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
             Box(modifier = Modifier.clip(RoundedCornerShape(100))) {
                 IconButton(
                     onClick = {

@@ -194,15 +194,25 @@ fun ImageCard(
 
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-//                    news.author?.forEach { author ->
-//                        Text(
-//                            text = author.ifEmpty { "Guardians" },
-//                            fontWeight = FontWeight.SemiBold,
-//                            textAlign = TextAlign.Center,
-//                            overflow = TextOverflow.Ellipsis,
-//                            style = MaterialTheme.typography.bodySmall
-//                        )
-//                    }
+                    news.author?.forEach {
+                        if (it==null){
+                            Text(
+                                text = "Guardians",
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center,
+                                overflow = TextOverflow.Ellipsis,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }else{
+                            Text(
+                                text = it,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center,
+                                overflow = TextOverflow.Ellipsis,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    }
 
 
                     Spacer(modifier = Modifier.width(8.dp))

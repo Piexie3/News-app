@@ -16,11 +16,11 @@ class SearchUseCase @Inject constructor(
 
     operator fun invoke(query: String): Flow<Resource<List<NewsItem>>> = flow {
         try {
-            emit(Resource.Loading<List<NewsItem>>())
+            emit(Resource.Loading())
 
             val newsList = repository.searchNews(query = query).toNewsItem()
 
-            emit(Resource.Success<List<NewsItem>>(newsList))
+            emit(Resource.Success(newsList))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
