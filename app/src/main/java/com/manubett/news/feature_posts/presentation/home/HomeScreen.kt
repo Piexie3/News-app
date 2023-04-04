@@ -8,7 +8,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.ViewHeadline
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -72,7 +74,6 @@ fun HomeScreen(
                     .clip(CircleShape),
                 contentColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
             )
-
         },
         bottomBar = {
             BottomAppBar(
@@ -106,8 +107,6 @@ fun HomeScreen(
                         )
                     }
                 }
-
-
             }
             if (state.error.isNotBlank()) {
                 Text(
@@ -214,7 +213,6 @@ fun ImageCard(
                         }
                     }
 
-
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "~ ${news.time}",
@@ -282,47 +280,6 @@ fun ImageCard(
                 .clip(MaterialTheme.shapes.large),
             fallback = painterResource(id = R.drawable.placeholder),
         )
-
-    }
-
-    Box {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = if (clicked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "favourite"
-                    )
-                }
-                Text(text = "128")
-                Spacer(modifier = Modifier.width(16.dp))
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Chat, contentDescription = "Chats")
-                }
-                Text(text = "80")
-                Spacer(modifier = Modifier.width(16.dp))
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Share, contentDescription = "share")
-                }
-                Text(text = "1.2k")
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Icon(imageVector = Icons.Default.StarRate, contentDescription = "Rating")
-                news.ratings?.let { rating ->
-                    Text(
-                        text = rating,
-                        color = if (isSystemInDarkTheme()) Color.White else Color.Black
-                    )
-                }
-            }
-        }
     }
 
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
