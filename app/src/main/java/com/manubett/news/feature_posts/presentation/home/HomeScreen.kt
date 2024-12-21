@@ -194,7 +194,7 @@ fun ImageCard(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     news.author?.forEach {
-                        if (it==null){
+                        if (false){
                             Text(
                                 text = "Guardians",
                                 fontWeight = FontWeight.SemiBold,
